@@ -1,0 +1,24 @@
+Remarques concernant le TP3
+---------------------------
+- ne pas oublier les initialisations, notamment les tableaux Matrice, AdPrCoefLi,
+  SecMembre et NumDLDir (pour ce dernier : NumDLDir[i] = i+1;)
+- ne pas oublier d'initialiser NextAd a 1 avant la boucle sur les elements et
+  d'ajouter l'instruction
+   AdPrCoefLi[NbLign-1] = NextAd;
+  apres cette boucle pour terminer la structure de donnees.
+- pour les entrees/sorties binaires, utiliser les fonctions fread et fwrite
+  (taper man fread). L'ouverture du fichier se fait comme d'habitude en mode
+  "r" ou "w". Pour specifier que le fichier contient des informations binaires,
+  on peut ajouter la lettre b apres r ou w ou autre combinaison, mais ce n'est
+  pas necessaire sous Unix.
+  On aura par exemple, pour ecrire une valeur et plusieurs :
+   fwrite(&NbLign,   sizeof(int)  ,     1, ficsmd);
+   fwrite( SecMembre,sizeof(float),NbLign, ficsmd);
+
+- l'usage des fonctions Fortran necessitent de les declarer, a l'aide du fichier forfun.h,
+  et d'ajouter la reference a la bibliotheque Fortran lors de l'edition de liens. Pour
+  creer un executable, la procedure type ressemblera a ceci :
+
+gfortran -c *.f
+gcc -Wall *.c *.o -lm -lgfortran
+

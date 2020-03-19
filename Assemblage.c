@@ -19,7 +19,7 @@ void Assemblage(int t, int nbtng, int nbtel, int nbneel, int nbaret, int** pngne
   float** MatElem=alloctab(nbneel, nbneel);         /* matrice elementaire */
   float* SMbrElem=malloc(nbneel*sizeof(float));     /* second membre */
   int* NuDElem=malloc(nbneel*sizeof(int));          /* reperage noeuds avec CL Dirichlet */
-  float* uDElem=malloc(nbneel*sizeof(float));       /* calc la valeur CL imposée dans ces noeuds */
+  float* uDElem=malloc(nbneel*sizeof(float));       /* calc la valeur CL imposee dans ces noeuds */
 
   
 

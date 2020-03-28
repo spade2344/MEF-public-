@@ -118,8 +118,6 @@ int main(){
 
   affsmd_(&NbLign1,AdPrCoefLi1,NumCol1, AdSuccLi1,Matrice1,secmbr1,nuddir1,valdir1);
 
- 
-
 
   /*** Libération mémoire ***/
   free(coorEl);
@@ -158,7 +156,7 @@ int main(){
   float* MatriceO;
   int* NumColO;
 
-  dSMDaSMO(&secmbrO, &AdPrCoefLiO, &MatriceO, &NumColO, "SMD_bin.txt", "SMO_bin.txt");
+  dSMDaSMO(&secmbrO, &AdPrCoefLiO,& MatriceO, &NumColO, "SMD_bin.txt", "SMO_bin.txt");
 
 
 
@@ -179,24 +177,6 @@ int main(){
 
   affsmo_(&NbLignO1,AdPrCoefLiO1,NumColO1,MatriceO1,secmbrO1);
 
-
-  /* Passage de la SMO au stockage profil */
-
-  float* MatProf = (float *)calloc(0.5*NbLign*(NbLign+1),sizeof(float));
-  int* Profil = malloc(NbLignO1*sizeof(int));
-
-  dSMOaPR(NbLignO1, AdPrCoefLiO1,MatriceO1,NumColO1,Profil, MatProf);
-
-
-  for (int i=0; i<NbLignO1; i++){
-    printf("%d \n", Profil[i]);
-  }
-  
-
-  for (int i=0; i<Profil[NbLignO1-1]+NbLignO1-1; i++){
-    printf("%f \n", MatProf[i]);
-  }
-  
 
   /*** Liberation memoire ***/
   free(secmbrO);

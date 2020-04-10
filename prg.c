@@ -187,6 +187,7 @@ int main(){
 
   dSMOaPR(NbLignO1, AdPrCoefLiO1,MatriceO1,NumColO1,Profil, MatProf);
 
+  /*
 
   for (int i=0; i<NbLignO1; i++){
     printf("%d \n", Profil[i]);
@@ -195,6 +196,47 @@ int main(){
 
   for (int i=0; i<Profil[NbLignO1-1]+NbLignO1-1; i++){
     printf("%f \n", MatProf[i]);
+    } */
+
+
+    /*** Calcul de la solution Elements finis ***/
+
+  /* Decomposition de Cholesky */
+
+  float* ld = malloc(NbLignO1*sizeof(float));
+  float* ll = malloc((0.5*NbLign*(NbLign-1))*sizeof(float));
+  float eps = 1e-15;
+
+
+  ltlpr_(&NbLignO1,Profil,MatProf,&MatProf[NbLignO1],&eps,ld,ll);
+
+  
+/*
+  printf("Coefs ld\n");
+  for (int i=0; i<NbLignO1; i++){
+    printf("%f \n", ld[i]);
+  }
+  printf("\nCoefs ld\n");
+  for (int j=0; j<Profil[NbLignO1-1]-1; j++){
+    printf("%f \n", ll[j]);
+  }
+*/
+
+
+  /* Resolution du systeme */
+
+  float* smbc=(float *) calloc(NbLignO1, sizeof(float));
+  float* SMB =(float *) calloc(NbLignO1, sizeof(float));
+
+
+  
+
+  rsprl_(&NbLignO1,Profil,ld,ll,secmbrO1,smbc);
+  rspru_(&NbLignO1,Profil,ld,ll,smbc,SMB);
+
+  printf("\nSolution du systeme\n");
+  for (int j=0; j<NbLignO1; j++){
+    printf("%f \n", SMB[j]);
   }
   
 

@@ -12,7 +12,7 @@ void transFK(int nbneel, float* valFbase, float** a, float* xk){
   # Inputs
   t        : type de l'element
   x        : (x1,x2) 
-  a        : forme bilinÃ©aire a
+  a        : coordonnées des noeuds de l'élément
 
   # Outputs
   x_K      : la transformÃ©e Fk

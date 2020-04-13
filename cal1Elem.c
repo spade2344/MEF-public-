@@ -100,7 +100,7 @@ void cal1Elem(int nRefDom, int nbRefD0, int* numRefD0, int nbRefD1, int* numRefD
 		MatElem[neelAr[1]-1][neelAr[0]-1] = MatElem[neelAr[1]-1][neelAr[0]-1] + M_Ar[1][0];
 		MatElem[neelAr[0]-1][neelAr[1]-1] = MatElem[neelAr[0]-1][neelAr[1]-1] + M_Ar[0][1];
 		MatElem[neelAr[1]-1][neelAr[1]-1] = MatElem[neelAr[1]-1][neelAr[1]-1] + M_Ar[1][1];
-			SMbrElem[neelAr[0]-1]=SMbrElem[neelAr[0]-1]+B_Ar[0];
+		SMbrElem[neelAr[0]-1]=SMbrElem[neelAr[0]-1]+B_Ar[0];
 		SMbrElem[neelAr[1]-1]=SMbrElem[neelAr[1]-1]+B_Ar[1];
 		/* printf(" Arete %d \n",i);
 		   printf("%f  %f\n",B_Ar[0],B_Ar[1]); */

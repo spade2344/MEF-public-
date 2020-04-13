@@ -19,7 +19,7 @@ void Assemblage(int t, int nbtng, int nbtel, int nbneel, int nbaret, int** pngne
   float** MatElem=alloctab(nbneel, nbneel);         /* matrice elementaire */
   float* SMbrElem=malloc(nbneel*sizeof(float));     /* second membre */
   int* NuDElem=malloc(nbneel*sizeof(int));          /* reperage noeuds avec CL Dirichlet */
-  float* uDElem=malloc(nbneel*sizeof(float));       /* calc la valeur CL imposee dans ces noeuds */
+  float* uDElem=malloc(nbneel*sizeof(float));       /* calc la valeur CL imposÃ©e dans ces noeuds */
 
   
 
@@ -31,6 +31,7 @@ void Assemblage(int t, int nbtng, int nbtel, int nbneel, int nbaret, int** pngne
      selectPts(nbneel,pngnel[k],pcoord,coorEl);
     cal1Elem(nRefDom,nbRefD0,numRefD0,nbRefD1,numRefD1,nbRefF1, numRefF1,
        t,nbneel, coorEl,nbaret, pnRefAr[k],MatElem, SMbrElem,NuDElem,uDElem);
+    impCalEl(k+1,t,nbneel,MatElem,SMbrElem, NuDElem, uDElem);    /* Affichage des vecteurs élémentaires */
     
     for (int i=0; i<nbneel; i++){
       I=pngnel[k][i];

@@ -28,9 +28,10 @@ void intElem(float **coorEl,int nbneel,int t, float **A, float* F){
   */
 
   /* Allocation et déclaration */
-  float **x_q_chap=alloctab(nbneel,2);
+  int nbpts=q_val(t);
+  float **x_q_chap=alloctab(nbpts,2);
   float *x_q=malloc(2*sizeof(float));
-  float *omega=malloc(nbneel*sizeof(float));
+  float *omega=malloc(nbpts*sizeof(float));
   float **JFK=alloctab(2,2);
   float **invJFK=alloctab(2,2);
   float *fctbas=malloc(nbneel*sizeof(float));
@@ -38,15 +39,16 @@ void intElem(float **coorEl,int nbneel,int t, float **A, float* F){
   float det;
   float eltdif;
   float cofvar;     float **cofv2=alloctab(2,2);		float cofv3;
+
   
   ppquad(omega,x_q_chap,t);
-   
-  for(int q=0; q<nbneel; q++){
+
+  for(int q=0; q<nbpts; q++){
     calFbase(t,x_q_chap[q],fctbas);
-    transFK(t,fctbas,coorEl,x_q);
+    transFK(nbneel,fctbas,coorEl,x_q);
     
     /* WW */
-   
+
     calDerFbase(t,x_q_chap[q],Dfctbas);
     matJacob(nbneel,2,Dfctbas,coorEl,JFK);
     invertM2x2(JFK, &det, invJFK);
@@ -54,7 +56,7 @@ void intElem(float **coorEl,int nbneel,int t, float **A, float* F){
     cofvar=A00(x_q);
     WW(nbneel,fctbas,eltdif,cofvar,A);
 
-    
+   
     /* ADWDW */
     cofv2[0][0]=A11(x_q); cofv2[0][1]=A12(x_q);
     cofv2[1][0]=A12(x_q); cofv2[1][1]=A22(x_q);

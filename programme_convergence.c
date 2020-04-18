@@ -19,14 +19,14 @@ int main(){
   float c=0;
   float d=1;
 
-  int t=2; /* type de maillage (t=1 => quadrangles ; t=2 => triangles) */
+  int t=1; /* type de maillage (t=1 => quadrangles ; t=2 => triangles) */
 
-  for(int l=0; l<nbiter; l++){
+  for(int l=1; l<nbiter; l++){
 
     /* Cr�ation du fichier de maillage */
     
 
-    int n1=pow(2,l+1); /* nombre de noeuds horizontaux */
+    int n1=pow(2,l+1)+1; /* nombre de noeuds horizontaux */
     int n2=n1; /* nombre de noeuds verticaux */ 
     int n=n1*n2; /* nombre de noeuds au total */
 
@@ -117,6 +117,7 @@ int main(){
     char* ficmai="fic_m";    
 
     /***** Lecture des fichiers de maillage *****/
+
    
     lecfima(ficmai,&t, &nbtng,&pcoord,&nbtel,&pngnel,&nbneel,&nbaret,&pnRefAr);
 
@@ -126,12 +127,12 @@ int main(){
     /* Allocation memoire et initialisation */
     float** coorEl=malloc(nbneel*sizeof(float *));
     int nRefDom = 0;          /* numero ref du domaine */
-    int numRefD0[4]={1,2,3,4};      /* Dirichlet homog */
+    int numRefD0[1]={-1};      /* Dirichlet homog */
     int numRefD1[1]={-1};      /* Dirichlet non-homog */
-    int numRefF1[1]={-1};    /* Neumann */
-    int nbRefD0=4;            /* nombre de nRefD0 */
+    int numRefF1[4]={1,2,3,4};    /* Neumann */
+    int nbRefD0=0;            /* nombre de nRefD0 */
     int nbRefD1=0;
-    int nbRefF1=0;
+    int nbRefF1=4;
 
 
 
@@ -140,7 +141,7 @@ int main(){
     /* Allocations et déclarations pour la fonction d'assemblage */
 
     int NbLign = nbtng;
-    int NbCoef =2*t*NbLign;
+    int NbCoef =2*(t+1)*NbLign;
     int* AdPrCoefLi=(int *) calloc(NbLign,sizeof(int));
     float* secmbr=(float *) calloc(NbLign, sizeof(float));
     int* nuddir=malloc(NbLign*sizeof(int));
@@ -162,7 +163,7 @@ int main(){
 
     /* Affichage de la matrice assemblée (prise en compte CL Dirichlet) */
 
-    /*  affsmd_(&NbLign,AdPrCoefLi,NumCol, AdSuccLi,Matrice,secmbr,nuddir,valdir); */
+      affsmd_(&NbLign,AdPrCoefLi,NumCol, AdSuccLi,Matrice,secmbr,nuddir,valdir); 
 
 
 
@@ -176,11 +177,11 @@ int main(){
     float* MatriceO;
     int* NumColO;
 
-    secmbrO=(float *) calloc(2*NbLign, sizeof(float));
-    AdPrCoefLiO=(int *) calloc(2*NbLign,sizeof(int));
+    secmbrO=(float *) calloc(NbLign, sizeof(float));
+    AdPrCoefLiO=(int *) calloc(NbLign,sizeof(int));
     NbCoef = (AdPrCoefLi)[NbLign-1]-1;
-    MatriceO=(float *) calloc(2*(NbLign+NbCoef),sizeof(float));
-    NumColO=malloc(2*(NbCoef)*sizeof(int));
+    MatriceO=(float *) calloc((NbLign+NbCoef),sizeof(float));
+    NumColO=malloc((NbCoef)*sizeof(int));
 
 
     cdesse_(&NbLign, AdPrCoefLi, NumCol, AdSuccLi,
@@ -191,7 +192,7 @@ int main(){
   
     /* Affichage de la matrice assemblée SMO */
 
-    /* affsmo_(&NbLign,AdPrCoefLiO,NumColO,MatriceO,secmbrO); */
+     affsmo_(&NbLign,AdPrCoefLiO,NumColO,MatriceO,secmbrO); 
 
 
     /* Passage de la SMO au stockage profil */
@@ -207,7 +208,7 @@ int main(){
 
     float* ld = malloc(NbLign*sizeof(float));
     float* ll = malloc((0.5*NbLign*(NbLign-1))*sizeof(float));
-    float eps = 1e-15;
+    float eps = 1e-7;
 
 
     ltlpr_(&NbLign,Profil,MatProf,&MatProf[NbLign],&eps,ld,ll);

@@ -29,10 +29,11 @@ void Assemblage(int t, int nbtng, int nbtel, int nbneel, int nbaret, int** pngne
 
     for(int k=0;k<nbtel;k++){
      selectPts(nbneel,pngnel[k],pcoord,coorEl);
-    cal1Elem(nRefDom,nbRefD0,numRefD0,nbRefD1,numRefD1,nbRefF1, numRefF1,
-       t,nbneel, coorEl,nbaret, pnRefAr[k],MatElem, SMbrElem,NuDElem,uDElem);
-    impCalEl(k+1,t,nbneel,MatElem,SMbrElem, NuDElem, uDElem);    /* Affichage des vecteurs élémentaires */
-    
+      cal1Elem(nRefDom,nbRefD0,numRefD0,nbRefD1,numRefD1,nbRefF1, numRefF1,
+	t,nbneel, coorEl,nbaret, pnRefAr[k],MatElem, SMbrElem,NuDElem,uDElem); 
+      /* impCalEl(k+1,t,nbneel,MatElem,SMbrElem, NuDElem, uDElem);  */  /* Affichage des vecteurs élémentaires */
+
+       
     for (int i=0; i<nbneel; i++){
       I=pngnel[k][i];
       secmbr[I-1]=secmbr[I-1]+SMbrElem[i];
@@ -45,9 +46,9 @@ void Assemblage(int t, int nbtng, int nbtel, int nbneel, int nbaret, int** pngne
 		nuddir[I-1]=0;
       }
 
-      Matrice[I-1]=Matrice[I-1]+MatElem[i][i];
+       Matrice[I-1]=Matrice[I-1]+MatElem[i][i];
       for(int j=0; j<i; j++){
-		X=MatElem[i][j];
+		X=MatElem[i][j]; 
 		J=pngnel[k][j];
 	  if (J>I){
 		assmat_(&J, &I, &X, AdPrCoefLi, NumCol, AdSuccLi, &Matrice[nbtng], &NextAd);
@@ -56,10 +57,10 @@ void Assemblage(int t, int nbtng, int nbtel, int nbneel, int nbaret, int** pngne
 		assmat_(&I, &J, &X, AdPrCoefLi, NumCol, AdSuccLi, &Matrice[nbtng], &NextAd);
 	  }
       }
-    }
+      }   
 
   }
-
+  
   AdPrCoefLi[nbtng-1] = NextAd;
   *NbCoef = AdPrCoefLi[nbtng-1]-1;
 

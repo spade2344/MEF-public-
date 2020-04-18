@@ -49,6 +49,7 @@ void cal1Elem(int nRefDom, int nbRefD0, int* numRefD0, int nbRefD1, int* numRefD
   float* B_Ar=malloc(2*sizeof(float));  /* Vecteur élémentaire d'arete */
 
   /* Initialisations */
+
   for(int i=0; i<nbneel; i++){
     SMbrElem[i]=0;
     NuDElem[i]=1;
@@ -57,7 +58,8 @@ void cal1Elem(int nRefDom, int nbRefD0, int* numRefD0, int nbRefD1, int* numRefD
       MatElem[i][j]=0;
     }
   }
-  
+
+
   intElem(coorEl,nbneel,typEl, MatElem, SMbrElem);
   
   for(int i=0; i<nbaret; i++){
@@ -95,7 +97,7 @@ void cal1Elem(int nRefDom, int nbRefD0, int* numRefD0, int nbRefD1, int* numRefD
 		M_Ar[0][0]=0; M_Ar[0][1]=0; M_Ar[1][0]=0; M_Ar[1][1]=0;
 		B_Ar[0]=0; B_Ar[1]=0;
 		
-		intAret(coorAr,3,M_Ar,B_Ar);
+		intAret(coorAr,2,3,M_Ar,B_Ar);
 		MatElem[neelAr[0]-1][neelAr[0]-1] = MatElem[neelAr[0]-1][neelAr[0]-1] + M_Ar[0][0];
 		MatElem[neelAr[1]-1][neelAr[0]-1] = MatElem[neelAr[1]-1][neelAr[0]-1] + M_Ar[1][0];
 		MatElem[neelAr[0]-1][neelAr[1]-1] = MatElem[neelAr[0]-1][neelAr[1]-1] + M_Ar[0][1];

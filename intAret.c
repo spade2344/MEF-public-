@@ -5,7 +5,7 @@
 #include<stdlib.h>
 #include<math.h>
 
-void intAret(float **coorAr,int t, float **A, float* F){
+void intAret(float **coorAr,int nbneel,int t, float **A, float* F){
 	
   /*** Procédure intAret ***
   ---------------------------------------------------------
@@ -28,33 +28,33 @@ void intAret(float **coorAr,int t, float **A, float* F){
   */	
 
   /* Allocation et déclaration */
-  float **x_q_chap=alloctab(3,2);
+  int nbpts=q_val(t);
+  float **x_q_chap=alloctab(nbpts,2);
   float *x_q=malloc(2*sizeof(float));
-  float *omega=malloc(3*sizeof(float));
+  float *omega=malloc(nbpts*sizeof(float));
   float **JFK=alloctab(2,1);
-  float *fctbas=malloc(2*sizeof(float));
-  float **Dfctbas=alloctab(2,1);
+  float *fctbas=malloc(nbneel*sizeof(float));
+  float **Dfctbas=alloctab(nbneel,1);
   float eltdif;
   float cofvar; float cofv3;
   
   ppquad(omega,x_q_chap,t);
   
-  for(int q=0; q<3; q++){
-    x_q[0]=x_q_chap[q][0]*coorAr[0][0]+coorAr[1][0]*(1-x_q_chap[q][0]);
-    x_q[1]=x_q_chap[q][0]*coorAr[0][1]+coorAr[1][1]*(1-x_q_chap[q][0]);
+  for(int q=0; q<nbpts; q++){   
     /* WW */
-    calFbase(3,x_q_chap[q],fctbas);
-    calDerFbase(3,x_q_chap[q],Dfctbas);
+    calFbase(t,x_q_chap[q],fctbas);
+    transFK(nbneel,fctbas,coorAr,x_q);
+    calDerFbase(t,x_q_chap[q],Dfctbas);
     
-    matJacob(2,1,Dfctbas,coorAr,JFK);
+    matJacob(nbneel,1,Dfctbas,coorAr,JFK);
     
     eltdif=omega[q]*sqrtf(JFK[0][0]*JFK[0][0]+JFK[1][0]*JFK[1][0]);
     cofvar=BN(x_q);
-    WW(2,fctbas,eltdif,cofvar,A);
+    WW(nbneel,fctbas,eltdif,cofvar,A);
 	
     /* W */
     cofv3=FN(x_q);
-    W(2,fctbas,eltdif,cofv3,F);
+    W(nbneel,fctbas,eltdif,cofv3,F);
     
   }
   freetab(x_q_chap);

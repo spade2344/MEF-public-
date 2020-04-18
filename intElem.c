@@ -65,7 +65,7 @@ void intElem(float **coorEl,int nbneel,int t, float **A, float* F){
 
 	/* W */
     cofv3=FOMEGA(x_q);
-    W(nbneel,fctbas,eltdif,cofv3,F);
+    W(nbneel,fctbas,eltdif,cofv3,F); 
     
   }
   freetab(x_q_chap);

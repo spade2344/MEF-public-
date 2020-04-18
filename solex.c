@@ -15,7 +15,7 @@ float solex(float *coor)
 {
   const float PI=3.141592;
   float val;
-  int nucas=1;
+  int nucas=3;
 
   switch (nucas) {
     case 1 :
